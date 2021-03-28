@@ -41,10 +41,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createCellsRouter = void 0;
 var express_1 = __importDefault(require("express"));
-var promises_1 = __importDefault(require("fs/promises"));
+var fs_1 = require("fs");
 var path_1 = __importDefault(require("path"));
 var createCellsRouter = function (filename, dir) {
     var router = express_1.default.Router();
+    router.use(express_1.default.json());
     var fullPath = path_1.default.join(dir, filename);
     router.get('cells', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
         var result, err_1;
@@ -52,7 +53,7 @@ var createCellsRouter = function (filename, dir) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 6]);
-                    return [4 /*yield*/, promises_1.default.readFile(fullPath, { encoding: 'utf8' })];
+                    return [4 /*yield*/, fs_1.promises.readFile(fullPath, { encoding: 'utf8' })];
                 case 1:
                     result = _a.sent();
                     res.send(JSON.parse(result));
@@ -61,7 +62,7 @@ var createCellsRouter = function (filename, dir) {
                     err_1 = _a.sent();
                     if (!(err_1.code === 'ENOENT')) return [3 /*break*/, 4];
                     // Add code to create a file and add defult cells
-                    return [4 /*yield*/, promises_1.default.writeFile(fullPath, '[]', 'utf-8')];
+                    return [4 /*yield*/, fs_1.promises.writeFile(fullPath, '[]', 'utf-8')];
                 case 3:
                     // Add code to create a file and add defult cells
                     _a.sent();
@@ -80,7 +81,7 @@ var createCellsRouter = function (filename, dir) {
                 case 0:
                     cells = req.body.cells;
                     // write the cell into the file
-                    return [4 /*yield*/, promises_1.default.writeFile(fullPath, JSON.stringify(cells), 'utf-8')];
+                    return [4 /*yield*/, fs_1.promises.writeFile(fullPath, JSON.stringify(cells), 'utf-8')];
                 case 1:
                     // write the cell into the file
                     _a.sent();
