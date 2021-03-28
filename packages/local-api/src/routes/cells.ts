@@ -12,7 +12,8 @@ export const createCellsRouter = (filename: string, dir: string) => {
   router.use(express.json());
 
   const fullPath = path.join(dir, filename);
-  router.get('cells', async (req, res) => {
+  router.get('/cells', async (req, res) => {
+    console.log('cellssssss');
     try {
       // Read the file
       const result = await fs.readFile(fullPath, { encoding: 'utf8' });
@@ -35,7 +36,7 @@ export const createCellsRouter = (filename: string, dir: string) => {
     // Send list of cells back to browser
   });
 
-  router.post('cells', async (req, res) => {
+  router.post('/cells', async (req, res) => {
     // Take the list of cells from the request obj
     // serialize them
     const { cells }: { cells: Cell[] } = req.body;
