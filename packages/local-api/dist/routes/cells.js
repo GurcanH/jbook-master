@@ -41,7 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createCellsRouter = void 0;
 var express_1 = __importDefault(require("express"));
-var fs_1 = require("fs");
+var promises_1 = __importDefault(require("fs/promises"));
 var path_1 = __importDefault(require("path"));
 var createCellsRouter = function (filename, dir) {
     var router = express_1.default.Router();
@@ -52,28 +52,23 @@ var createCellsRouter = function (filename, dir) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    console.log('cellssssss');
-                    _a.label = 1;
+                    _a.trys.push([0, 2, , 6]);
+                    return [4 /*yield*/, promises_1.default.readFile(fullPath, { encoding: 'utf-8' })];
                 case 1:
-                    _a.trys.push([1, 3, , 7]);
-                    return [4 /*yield*/, fs_1.promises.readFile(fullPath, { encoding: 'utf8' })];
-                case 2:
                     result = _a.sent();
                     res.send(JSON.parse(result));
-                    return [3 /*break*/, 7];
-                case 3:
+                    return [3 /*break*/, 6];
+                case 2:
                     err_1 = _a.sent();
-                    if (!(err_1.code === 'ENOENT')) return [3 /*break*/, 5];
-                    // Add code to create a file and add defult cells
-                    return [4 /*yield*/, fs_1.promises.writeFile(fullPath, '[]', 'utf-8')];
-                case 4:
-                    // Add code to create a file and add defult cells
+                    if (!(err_1.code === 'ENOENT')) return [3 /*break*/, 4];
+                    return [4 /*yield*/, promises_1.default.writeFile(fullPath, '[]', 'utf-8')];
+                case 3:
                     _a.sent();
                     res.send([]);
-                    return [3 /*break*/, 6];
-                case 5: throw err_1;
-                case 6: return [3 /*break*/, 7];
-                case 7: return [2 /*return*/];
+                    return [3 /*break*/, 5];
+                case 4: throw err_1;
+                case 5: return [3 /*break*/, 6];
+                case 6: return [2 /*return*/];
             }
         });
     }); });
@@ -83,10 +78,10 @@ var createCellsRouter = function (filename, dir) {
             switch (_a.label) {
                 case 0:
                     cells = req.body.cells;
-                    // write the cell into the file
-                    return [4 /*yield*/, fs_1.promises.writeFile(fullPath, JSON.stringify(cells), 'utf-8')];
+                    // Write the cells into the file
+                    return [4 /*yield*/, promises_1.default.writeFile(fullPath, JSON.stringify(cells), 'utf-8')];
                 case 1:
-                    // write the cell into the file
+                    // Write the cells into the file
                     _a.sent();
                     res.send({ status: 'ok' });
                     return [2 /*return*/];
